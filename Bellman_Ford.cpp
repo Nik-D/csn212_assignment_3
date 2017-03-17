@@ -1,8 +1,8 @@
-/*Bellman_Ford algorithm- nikhil daf(15114021) */
 #include <cstdio>
-#include <climits>
+#include <ctime>
 #include <vector>
 #include <list>
+#include <climits>
 #include <utility>
 
 using namespace std;
@@ -86,9 +86,9 @@ int main()
         adjacencyList[v1].push_back(make_pair(v2, weight));
     }
 
-    printf("\nThe Adjacency List-\n");
+    printf("\nEdge List-\n");
     for (int i = 1; i < adjacencyList.size(); ++i) {
-        printf("adjacencyList[%d] ", i);
+        printf("Edge from Vertex[%d] ", i);
 
         list< pair<int, int> >::iterator itr = adjacencyList[i].begin();
 
@@ -103,20 +103,24 @@ int main()
     int startVertex;
     printf("\nEnter a Start Vertex -\n");
     scanf("%d", &startVertex);
+    int start_time=clock();
     int returnValue = bellmanFord(adjacencyList, vertices, startVertex, shortestDistances);
     if (returnValue == -1) {
-        printf("No Negative Cycles exist in the Graph -\n");
+        printf("\nNo Negative Cycles exist in the Graph \n");
     } else {
-        printf("Negative Cycles exists in the Graph -\n");
+        printf("\nNegative Cycles exists in the Graph \n");
         PrintNegativeCycle(shortestDistances, shortestDistances[returnValue].second
                                             , returnValue);
         return 0;
     }
 
-    printf("\n\nVertex    Shortest Distance to Vertex %d     Parent Vertex-\n", startVertex);
+    printf("\n\nVertex    Shortest Distance to Vertex %d     Parent Vertex\n", startVertex);
     for (int i = 1; i <= vertices; ++i) {
         printf("%d \t  %d \t\t\t\t    %d\n", i, shortestDistances[i].first,
                                                 shortestDistances[i].second);
     }
+    int stop_time=clock();
+    double time_taken= (stop_time-start_time)/double(CLOCKS_PER_SEC)*1000;
+    printf("\nTime Taken= %f ms \n", time_taken);
     return 0;
 }
